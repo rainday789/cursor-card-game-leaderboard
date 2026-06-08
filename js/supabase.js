@@ -4,7 +4,7 @@ function assertSupabaseConfig() {
   }
   if (!window.SUPABASE_URL || !window.SUPABASE_ANON_KEY) {
     throw new Error(
-      'Supabase 설정이 없습니다. config.local.example.js 를 참고해 config.local.js 를 생성하세요.'
+      'Supabase 설정이 없습니다. supabase-config.example.js 를 참고해 supabase-config.js 를 생성하세요.'
     );
   }
 }

@@ -1,4 +1,5 @@
 # Supabase secrets — never commit
+supabase-config.js
 config.local.js
 config.js
 .env

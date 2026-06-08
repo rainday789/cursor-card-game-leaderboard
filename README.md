@@ -7,10 +7,10 @@
 1. Supabase 설정 파일을 만듭니다.
 
 ```bash
-cp config.local.example.js config.local.js
+cp supabase-config.example.js supabase-config.js
 ```
 
-2. `config.local.js`에 Supabase 프로젝트 URL과 anon key를 입력합니다.
+2. `supabase-config.js`에 Supabase 프로젝트 URL과 anon key를 입력합니다.
 3. 로컬 서버로 실행합니다.
 
 ```bash
@@ -21,33 +21,41 @@ npx serve .
 
 | 파일 | Git 커밋 | 용도 |
 |------|----------|------|
-| `config.local.example.js` | ✅ | 설정 템플릿 (플레이스홀더만 포함) |
-| `config.local.js` | ❌ | 실제 Supabase URL / anon key |
+| `supabase-config.example.js` | ✅ | 설정 템플릿 (플레이스홀더만 포함) |
+| `supabase-config.js` | ❌ | 실제 Supabase URL / anon key |
 | `.env.example` | ✅ | 배포용 환경 변수 템플릿 |
 | `.env` | ❌ | 로컬/배포 환경 변수 |
 
-**절대 Git에 커밋하지 말 것:** `config.local.js`, `config.js`, `.env`
+**절대 Git에 커밋하지 말 것:** `supabase-config.js`, `config.local.js`, `config.js`, `.env`
 
-Supabase anon key는 클라이언트에 노출되는 공개 키이지만, 저장소 유출을 방지하기 위해 별도 파일로 분리했습니다. 데이터 보호는 Supabase RLS 정책으로 처리됩니다.
+## 배포 (Vercel)
 
-## 배포 (Vercel / Netlify)
+### 1. Vercel 환경 변수 등록
 
-환경 변수를 설정합니다.
+Vercel 프로젝트 → **Settings** → **Environment Variables**
 
-- `SUPABASE_URL`
-- `SUPABASE_ANON_KEY`
+| Name | Value |
+|------|-------|
+| `SUPABASE_URL` | Supabase Project URL |
+| `SUPABASE_ANON_KEY` | Supabase anon public key |
 
-배포 전 설정 파일을 생성합니다.
+Production / Preview / Development 모두 체크 후 저장합니다.
+
+### 2. 빌드 시 자동 생성
+
+`vercel.json`과 `package.json`에 빌드 스크립트가 설정되어 있습니다.
 
 ```bash
-node scripts/generate-config.mjs
+npm run build
+# → scripts/generate-supabase-config.mjs 실행
+# → supabase-config.js 자동 생성
 ```
 
-Vercel 예시 (Build Command):
+Vercel은 배포 시 위 빌드 명령을 자동 실행합니다. 환경 변수만 등록하면 `supabase-config.js`가 생성됩니다.
 
-```bash
-node scripts/generate-config.mjs
-```
+### 3. 재배포
+
+환경 변수 저장 후 **Redeploy**를 실행해야 반영됩니다.
 
 ## 게임 규칙
 
