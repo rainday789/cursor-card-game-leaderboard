@@ -1,7 +1,20 @@
-const supabaseClient = window.supabase.createClient(
-  window.SUPABASE_URL,
-  window.SUPABASE_ANON_KEY
-);
+function assertSupabaseConfig() {
+  if (window.__SUPABASE_CONFIG_ERROR__) {
+    throw new Error(window.__SUPABASE_CONFIG_ERROR__);
+  }
+  if (!window.SUPABASE_URL || !window.SUPABASE_ANON_KEY) {
+    throw new Error(
+      'Supabase 설정이 없습니다. config.local.example.js 를 참고해 config.local.js 를 생성하세요.'
+    );
+  }
+}
+
+function getSupabaseClient() {
+  assertSupabaseConfig();
+  return window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+}
+
+const supabaseClient = getSupabaseClient();
 
 async function saveScore({ player_name, moves, elapsed_seconds }) {
   const { error } = await supabaseClient.from('game_scores').insert({

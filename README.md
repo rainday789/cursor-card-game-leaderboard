@@ -2,17 +2,52 @@
 
 4×4 메모리 매칭 게임. HTML, CSS, Vanilla JavaScript로 구현했으며 Supabase `game_scores` 테이블에 기록을 저장합니다.
 
-## 실행 방법
+## 로컬 실행
 
-1. `config.example.js`를 복사해 `config.js`를 만듭니다.
-2. Supabase 프로젝트 URL과 anon key를 `config.js`에 입력합니다.
-3. 로컬 서버로 `index.html`을 엽니다.
+1. Supabase 설정 파일을 만듭니다.
+
+```bash
+cp config.local.example.js config.local.js
+```
+
+2. `config.local.js`에 Supabase 프로젝트 URL과 anon key를 입력합니다.
+3. 로컬 서버로 실행합니다.
 
 ```bash
 npx serve .
 ```
 
-또는 VS Code Live Server 확장을 사용해도 됩니다.
+## 보안 — Supabase 키 관리
+
+| 파일 | Git 커밋 | 용도 |
+|------|----------|------|
+| `config.local.example.js` | ✅ | 설정 템플릿 (플레이스홀더만 포함) |
+| `config.local.js` | ❌ | 실제 Supabase URL / anon key |
+| `.env.example` | ✅ | 배포용 환경 변수 템플릿 |
+| `.env` | ❌ | 로컬/배포 환경 변수 |
+
+**절대 Git에 커밋하지 말 것:** `config.local.js`, `config.js`, `.env`
+
+Supabase anon key는 클라이언트에 노출되는 공개 키이지만, 저장소 유출을 방지하기 위해 별도 파일로 분리했습니다. 데이터 보호는 Supabase RLS 정책으로 처리됩니다.
+
+## 배포 (Vercel / Netlify)
+
+환경 변수를 설정합니다.
+
+- `SUPABASE_URL`
+- `SUPABASE_ANON_KEY`
+
+배포 전 설정 파일을 생성합니다.
+
+```bash
+node scripts/generate-config.mjs
+```
+
+Vercel 예시 (Build Command):
+
+```bash
+node scripts/generate-config.mjs
+```
 
 ## 게임 규칙
 

@@ -1,1 +1,10 @@
+# Supabase secrets — never commit
+config.local.js
 config.js
+.env
+.env.local
+.env.*.local
+
+# OS / editor
+.DS_Store
+Thumbs.db
