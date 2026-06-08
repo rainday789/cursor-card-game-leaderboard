@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>카드 뒤집기 게임</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="stars" aria-hidden="true"></div>
+
+  <div class="app">
+    <header class="header">
+      <div class="title-block">
+        <h1 class="game-title">MEMORY MATCH</h1>
+        <p class="game-subtitle">같은 그림의 카드 두 장을 찾아보세요!</p>
+      </div>
+
+      <div class="hud">
+        <div class="hud-panel">
+          <div class="stat stat-time">
+            <span class="stat-icon">⏱</span>
+            <div class="stat-info">
+              <span class="stat-label">TIME</span>
+              <span class="stat-value" id="timer">0.00</span>
+            </div>
+          </div>
+          <div class="stat stat-moves">
+            <span class="stat-icon">🎯</span>
+            <div class="stat-info">
+              <span class="stat-label">MOVES</span>
+              <span class="stat-value" id="moves">0</span>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-arcade" id="restart-btn">
+          <span class="btn-shine"></span>
+          NEW GAME
+        </button>
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="game-section">
+        <div class="table-frame">
+          <div class="table-felt">
+            <div class="board" id="board" aria-label="카드 게임 보드"></div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="leaderboard-section">
+        <div class="panel-header">
+          <span class="panel-icon">🏆</span>
+          <h2>HALL OF FAME</h2>
+        </div>
+        <div class="leaderboard-loading" id="leaderboard-loading">
+          <span class="loading-dot"></span>
+          <span class="loading-dot"></span>
+          <span class="loading-dot"></span>
+        </div>
+        <ol class="leaderboard-list" id="leaderboard-list" hidden></ol>
+        <p class="leaderboard-empty" id="leaderboard-empty" hidden>아직 기록이 없습니다. 첫 번째 챔피언이 되어보세요!</p>
+        <p class="leaderboard-error" id="leaderboard-error" hidden></p>
+      </aside>
+    </main>
+  </div>
+
+  <div class="modal-overlay" id="modal-overlay" hidden>
+    <div class="confetti" aria-hidden="true"></div>
+    <div class="modal" role="dialog" aria-labelledby="modal-title">
+      <div class="modal-crown">👑</div>
+      <h2 id="modal-title">YOU WIN!</h2>
+      <p class="modal-subtitle">모든 카드를 완벽하게 맞췄습니다!</p>
+      <div class="modal-stats">
+        <div class="modal-stat">
+          <span class="modal-stat-icon">⏱</span>
+          <span class="modal-stat-label">시간</span>
+          <span class="modal-stat-value" id="modal-time">0.00초</span>
+        </div>
+        <div class="modal-stat">
+          <span class="modal-stat-icon">🎯</span>
+          <span class="modal-stat-label">이동</span>
+          <span class="modal-stat-value" id="modal-moves">0회</span>
+        </div>
+      </div>
+      <form id="save-form">
+        <label for="player-name">플레이어 이름</label>
+        <input
+          type="text"
+          id="player-name"
+          name="player-name"
+          placeholder="닉네임 입력 (미입력 시 Anonymous)"
+          maxlength="32"
+          autocomplete="off"
+        >
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-arcade btn-save" id="save-btn">
+            <span class="btn-shine"></span>
+            SAVE SCORE
+          </button>
+          <button type="button" class="btn btn-arcade btn-ghost" id="play-again-btn">PLAY AGAIN</button>
+        </div>
+      </form>
+      <p class="save-status" id="save-status" hidden></p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
