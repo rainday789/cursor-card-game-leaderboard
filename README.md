@@ -53,6 +53,8 @@ npm run build
 
 Vercel은 배포 시 위 빌드 명령을 자동 실행합니다. 환경 변수만 등록하면 `supabase-config.js`가 생성됩니다.
 
+`vercel.json`의 `outputDirectory`는 `.`(프로젝트 루트)로 설정되어 있습니다. Vercel 대시보드의 Output Directory가 `public`으로 되어 있으면 **비워두거나 `.`로 변경**하세요.
+
 ### 3. 재배포
 
 환경 변수 저장 후 **Redeploy**를 실행해야 반영됩니다.
